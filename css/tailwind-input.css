@@ -1,0 +1,124 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Montserrat", system-ui, sans-serif;
+  --color-emerald: var(--emerald);
+  --color-emerald-deep: var(--emerald-deep);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-ivory: var(--ivory);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+
+:root {
+  --radius: 0.125rem;
+  --emerald: oklch(0.33 0.06 168);
+  --emerald-deep: oklch(0.24 0.045 168);
+  --gold: oklch(0.79 0.1 82);
+  --gold-soft: oklch(0.87 0.08 88);
+  --ivory: oklch(0.965 0.014 85);
+  --background: oklch(0.993 0.007 90);
+  --foreground: oklch(0.24 0.045 168);
+  --card: oklch(0.965 0.014 85);
+  --card-foreground: oklch(0.24 0.045 168);
+  --popover: oklch(0.993 0.007 90);
+  --popover-foreground: oklch(0.24 0.045 168);
+  --primary: oklch(0.33 0.06 168);
+  --primary-foreground: oklch(0.965 0.014 85);
+  --secondary: oklch(0.91 0.015 85);
+  --secondary-foreground: oklch(0.24 0.045 168);
+  --muted: oklch(0.91 0.015 85);
+  --muted-foreground: oklch(0.45 0.03 168);
+  --accent: oklch(0.79 0.1 82);
+  --accent-foreground: oklch(0.24 0.045 168);
+  --destructive: oklch(0.55 0.2 27);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.86 0.03 85);
+  --input: oklch(0.86 0.03 85);
+  --ring: oklch(0.79 0.1 82);
+  --chart-1: var(--gold); --chart-2: var(--emerald); --chart-3: var(--gold-soft); --chart-4: var(--ivory); --chart-5: var(--emerald-deep);
+  --sidebar: var(--ivory); --sidebar-foreground: var(--foreground); --sidebar-primary: var(--primary); --sidebar-primary-foreground: var(--primary-foreground); --sidebar-accent: var(--secondary); --sidebar-accent-foreground: var(--foreground); --sidebar-border: var(--border); --sidebar-ring: var(--ring);
+  --gradient-gold: linear-gradient(135deg, var(--gold-soft), var(--gold) 55%, oklch(0.68 0.1 75));
+  --shadow-soft: 0 20px 50px -25px color-mix(in oklab, var(--emerald-deep) 45%, transparent);
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+  body { @apply bg-background text-foreground font-sans antialiased; overflow-x: hidden; }
+  h1, h2, h3, h4 { @apply font-serif; font-weight: 500; }
+}
+
+@utility text-gold-gradient {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+@utility bg-gold-gradient { background: var(--gradient-gold); }
+@utility shadow-soft { box-shadow: var(--shadow-soft); }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s ease, transform .9s ease; }
+.reveal.is-visible { opacity: 1; transform: none; }
+@keyframes float-pearl { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-14px) } }
+.float-pearl { animation: float-pearl 6s ease-in-out infinite; }
+@keyframes ticker { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+.ticker { animation: ticker 40s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .ticker { animation-duration: 120s; } .reveal { opacity: 1; transform: none; } .float-pearl { animation: none; } html { scroll-behavior: auto; } }
